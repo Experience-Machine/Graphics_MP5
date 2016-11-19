@@ -101,6 +101,16 @@ Renderable.prototype.setColor = function (color) { this.mColor = color; };
 Renderable.prototype.getColor = function () { return this.mColor; };
 Renderable.prototype.getVelocity = function () { return this.mVelocity; };
 
+Renderable.prototype.containsPoint = function(x, y)
+{
+    var xf = this.getXform();
+    if(Math.asb(x - xf.getXPos()) < xf.getWidth() / 2 &&
+       Math.abs(y - xf.getYPos()) < xf.getHeight() / 2)
+    {
+        return true;
+    }
+    return false;
+};
 
 //--- end of Public Methods
 //</editor-fold>

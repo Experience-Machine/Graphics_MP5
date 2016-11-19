@@ -44,3 +44,17 @@ ClassExample.prototype.draw = function (camera) {
     for (i=0; i<this.mAllObjects.length; i++)
         this.mAllObjects[i].draw(camera);
 };
+
+// Determine if any objects contain the point
+// If they contain the point, they become selected
+ClassExample.prototype.select = function(x, y)
+{
+    var i;
+    for (i=0; i<this.mAllObjects.length; i++)
+        if(this.mAllObjects[i].containsPoint(x, y))
+        {
+            this.mCurrentObject = this.mAllObjects[i];
+            return true;
+        }
+    return false;
+};

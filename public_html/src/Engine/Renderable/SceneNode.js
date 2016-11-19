@@ -32,6 +32,17 @@ SceneNode.prototype.getXform = function () { return this.mXform; };
 
 SceneNode.prototype.size = function () { return this.mSet.length; };
 
+SceneNode.prototype.containsPoint = function(x, y)
+{
+    var xf = this.getXform();
+    if(Math.abs(x - xf.getXPos()) < xf.getWidth() / 2 &&
+       Math.abs(y - xf.getYPos()) < xf.getHeight() / 2)
+    {
+        return true;
+    }
+    return false;
+};
+
 SceneNode.prototype.getRenderableAt = function (index) {
     return this.mSet[index];
 };

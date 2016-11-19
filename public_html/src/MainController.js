@@ -55,11 +55,22 @@ myModule.controller("MainCtrl", function ($scope) {
         $scope.mMyWorld.draw($scope.mView);
     };
 
-    $scope.defineSquare = function (event) {
-        $scope.mMyWorld.defineCenter(
-            $scope.mView.mouseWCX($scope.mCanvasMouse.getPixelXPos(event)),
-            $scope.mView.mouseWCY($scope.mCanvasMouse.getPixelYPos(event)));
-        $scope.mSelectedXform = $scope.mMyWorld.currentObject().getXform();
+    $scope.defineSquare = function (event) 
+    {
+        var mWCX = $scope.mView.mouseWCX($scope.mCanvasMouse.getPixelXPos(event));
+        var mWCY = $scope.mView.mouseWCY($scope.mCanvasMouse.getPixelYPos(event));
+        
+        if($scope.mMyWorld.select(mWCX, mWCY))
+        {
+            $scope.mSelectedXform = $scope.mMyWorld.currentObject().getXform();
+        }
+        else
+        {
+            $scope.mMyWorld.defineCenter(
+                mWCX,
+                mWCY);
+            $scope.mSelectedXform = $scope.mMyWorld.currentObject().getXform();
+        }
         $scope.mForceRedraw = true;
     };
 
