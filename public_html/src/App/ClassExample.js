@@ -33,7 +33,7 @@ function ClassExample() {
     this.mAllObjects = [];
     this.mAllObjects.push(this.mCurrentObject);
     
-    this.vmUseRandomColor = false;
+    this.vmUseRandomColor = true;
     this.setConstShader();
 };
 

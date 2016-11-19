@@ -43,13 +43,37 @@ Renderable.prototype.setFileTexture = function (f) {
 Renderable.prototype.update = function () 
 {
     var xf = this.getXform();
-    if(xf.getYPos() != xf.getYDest())
+    if(xf.getYPos() !== xf.getYDest())
     {
-        xf.incYPosBy(-1);
+        if(xf.getYPos() > xf.getYDest())
+        {
+            xf.incYPosBy(-1);
+        }
+        else
+        {
+            xf.incYPosBy(1);
+        }
         
-        if(xf.getYPos() - xf.getYDest() < 1)
+        if(Math.abs(xf.getYPos() - xf.getYDest()) < 1)
         {
             xf.setYPos(xf.getYDest());
+        }
+    }
+    
+    if(xf.getXPos() !== xf.getXDest())
+    {
+        if(xf.getXPos() > xf.getXDest())
+        {
+            xf.incXPosBy(-1);
+        }
+        else
+        {
+            xf.incXPosBy(1);
+        }
+        
+        if(Math.abs(xf.getXPos() - xf.getXDest()) < 1)
+        {
+            xf.setXPos(xf.getXDest());
         }
     }
 };

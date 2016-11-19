@@ -33,8 +33,8 @@ ClassExample.prototype.defineCenter = function (x, y) {
     }
     this.mAllObjects.push(this.mCurrentObject);
     var xf = this.mCurrentObject.getXform();
-    xf.setXPos(x);
-    xf.setYPos(y);
+    xf.setPosition(x, y);
+    xf.setDestination(x, y);
     xf.setSize(2, 2);
     
     if (this.mCurrentObject.setFileTexture !== undefined)
@@ -47,13 +47,28 @@ ClassExample.prototype.defineWidth = function (x, y) {
     var dx = Math.abs(x - xf.getXPos());
     var dy = Math.abs(y - xf.getYPos());
     xf.setSize(dx*2, dy*2);
-    xf.setYDest(xf.getYPos());
 };
 
+// Called when a shape is finalized
 ClassExample.prototype.defined = function () 
 {
-    var xf = this.mCurrentObject.getXform();
-    xf.setYDest(20);
+    var numObjects = this.mAllObjects.length;
+    // Update every object's destination
+    var i = 0;
+    var xf = this.mAllObjects[i].getXform();
+    var xPos = (-(1/2)*numObjects*5); // Could be better
+    var yPos = 20; // Arbitrary line
+    xf.setDestination(xPos, yPos);
+    var lastPosition = xPos;
+    lastPosition += xf.getWidth()/2;
+    for (i=1; i < numObjects; i++)
+    {
+        xf = this.mAllObjects[i].getXform();
+        
+        xPos = lastPosition + xf.getWidth()/2 + 2;
+        xf.setDestination(xPos, yPos);
+        lastPosition = xPos + xf.getWidth()/2;
+    }
 };
 
 ClassExample.prototype.setConstShader = function() {
