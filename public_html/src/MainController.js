@@ -22,7 +22,7 @@ myModule.controller("MainCtrl", function ($scope) {
     
     $scope.mMyWorld = new ClassExample();
     $scope.mView = new Camera(
-         [40, 30],
+         [0, 0],
          80,
          [0, 0, 800, 600]);
     

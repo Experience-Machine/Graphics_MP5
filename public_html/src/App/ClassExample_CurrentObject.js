@@ -21,7 +21,9 @@ ClassExample.prototype.currentObject = function () {
 };
 
 ClassExample.prototype.defineCenter = function (x, y) {
-    this.mCurrentObject = new SquareRenderable(this.vmUseShader);
+    
+    this.mCurrentObject = new ArmSegment(this.vmUseShader, "newShape", 0, 0);
+    /*
     if (this.vmUseRandomColor) {
         this.mCurrentObject.setColor([
             Math.random(), Math.random(), Math.random(), 1]);
@@ -31,6 +33,7 @@ ClassExample.prototype.defineCenter = function (x, y) {
                 [Math.random(), Math.random(), Math.random(), 1]);
         }
     }
+    */
     this.mAllObjects.push(this.mCurrentObject);
     var xf = this.mCurrentObject.getXform();
     xf.setPosition(x, y);
@@ -50,21 +53,31 @@ ClassExample.prototype.defineWidth = function (x, y) {
 };
 
 // Called when a shape is finalized
+// Update every object's destination
 ClassExample.prototype.defined = function () 
-{
+{    
+    // Determine 'overall size' of objects
     var numObjects = this.mAllObjects.length;
-    // Update every object's destination
-    var i = 0;
+    var overallSize = 0;
+    var i;
+    for (i=0; i < numObjects; i++)
+    {
+        overallSize += this.mAllObjects[i].getXform().getWidth();
+    }
+    
+    // Update first object first
+    i = 0;
     var xf = this.mAllObjects[i].getXform();
-    var xPos = (-(1/2)*numObjects*5); // Could be better
-    var yPos = 20; // Arbitrary line
+    var xPos = (-overallSize/2); // Could be better
+    var yPos = -20; // Arbitrary line
     xf.setDestination(xPos, yPos);
     var lastPosition = xPos;
     lastPosition += xf.getWidth()/2;
+    
+    // Update the rest of the objects
     for (i=1; i < numObjects; i++)
     {
         xf = this.mAllObjects[i].getXform();
-        
         xPos = lastPosition + xf.getWidth()/2 + 2;
         xf.setDestination(xPos, yPos);
         lastPosition = xPos + xf.getWidth()/2;

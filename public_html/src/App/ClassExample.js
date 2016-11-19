@@ -22,18 +22,16 @@ function ClassExample() {
         "src/GLSLShaders/TextureVS.glsl",      // Path to the VertexShader 
         "src/GLSLShaders/TextureFS.glsl");    // Path to the simple FragmentShader
     
-    this.mCurrentObject = new SquareRenderable(this.mFileTextureShader);
+    this.mCurrentObject = new ArmSegment(this.mConstColorShader, "newShape", 0, 0);
     this.mFileTexture = new FileTextureSupport("assets/minion_portal.png", true);
-    this.mCurrentObject.setFileTexture(this.mFileTexture);
-    this.mCurrentObject.setColor([1, 0.25, 0.25, 1]);
 
-    this.mCurrentObject.getXform().setPosition(40, 30);
-    this.mCurrentObject.getXform().setSize(5, 5);
+    this.mCurrentObject.getXform().setPosition(20, 20);
+    this.mCurrentObject.getXform().setSize(20, 20);
+    this.mCurrentObject.getXform().setDestination(0,0);
     
     this.mAllObjects = [];
-    this.mAllObjects.push(this.mCurrentObject);
     
-    this.vmUseRandomColor = true;
+    this.vmUseRandomColor = false;
     this.setConstShader();
 };
 
