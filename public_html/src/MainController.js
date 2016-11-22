@@ -51,8 +51,9 @@ myModule.controller("MainCtrl", function ($scope) {
 
     $scope.mainTimerHandler = function () {
         $scope.mMyWorld.update();
-        gEngine.Core.clearCanvas([0.9, 0.9, 0.9, 1]);        // Clear the canvas
+        gEngine.Core.clearCanvas([0.9, 0.9, 0.9, 1]); // Clear the canvas
         $scope.mMyWorld.draw($scope.mView);
+        $scope.handleManipulators(); // make sure it follows when using the sliders
     };
 
     $scope.defineSquare = function (event) 
@@ -60,13 +61,18 @@ myModule.controller("MainCtrl", function ($scope) {
         var mWCX = $scope.mView.mouseWCX($scope.mCanvasMouse.getPixelXPos(event));
         var mWCY = $scope.mView.mouseWCY($scope.mCanvasMouse.getPixelYPos(event));
         
-        if($scope.mMyWorld.select(mWCX, mWCY))
+        if($scope.mMyWorld.select(mWCX, mWCY)) // selecting an object
         {
             $scope.mSelectedXform = $scope.mMyWorld.currentObject().getXform();
+            
+            $scope.mMyWorld.drawManipulator = true; // selecting an object so draw
+            $scope.handleManipulators(); 
         }
         else
         {
-            $scope.mMyWorld.defineCenter(
+            $scope.mMyWorld.drawManipulator = false; // stop drawing
+            
+            $scope.mMyWorld.defineCenter( // make a new object
                 mWCX,
                 mWCY);
             $scope.mSelectedXform = $scope.mMyWorld.currentObject().getXform();
@@ -107,6 +113,26 @@ myModule.controller("MainCtrl", function ($scope) {
         };
         $scope.mMyImagePath = input.files[0];
         reader.readAsDataURL(input.files[0]);
+    };
+    
+    // handle the movement of the various direct manipulators
+    $scope.handleManipulators = function (){
+        
+        var targetX = $scope.mMyWorld.currentObject().getXform().getXPos();   
+        var targetY = $scope.mMyWorld.currentObject().getXform().getYPos();
+        
+        // translate manipulator
+        $scope.mMyWorld.mManipulatorTranslate.getXform().setPosition(targetX, targetY);
+        
+        // rotate manipulator
+        $scope.mMyWorld.mManipulatorRotation.getXform().setPosition(targetX, targetY - 5);
+        
+        // scale manipulator
+        $scope.mMyWorld.mManipulatorScaling.getXform().setPosition(targetX - 5, targetY);
+        
+        // black connecting bars (purely aesthetic) 
+        $scope.mMyWorld.mBarOne.getXform().setPosition(targetX - 2.5, targetY);
+        $scope.mMyWorld.mBarTwo.getXform().setPosition(targetX, targetY - 2.5);
     };
 
 });

@@ -10,6 +10,8 @@
 
 function ClassExample() {
     
+    this.drawManipulator = false; // have it off at the beginning
+    
     this.mConstColorShader = new SimpleShader(
         "src/GLSLShaders/SimpleVS.glsl",      // Path to the VertexShader 
         "src/GLSLShaders/SimpleFS.glsl");    // Path to the simple FragmentShader
@@ -33,16 +35,49 @@ function ClassExample() {
     
     this.vmUseRandomColor = false;
     this.setConstShader();
+    
+    // draw the manipulators
+    this.mManipulatorTranslate = new SquareRenderable(this.mConstColorShader);
+    this.mManipulatorTranslate.setColor([0, 0, 1, 1]);
+    this.mManipulatorTranslate.getXform().setSize(2, 2);
+    
+    this.mManipulatorRotation = new SquareRenderable(this.mConstColorShader);
+    this.mManipulatorRotation.setColor([0, 1, 0, 1]);
+    this.mManipulatorRotation.getXform().setSize(2, 2);
+    
+    this.mManipulatorScaling = new SquareRenderable(this.mConstColorShader);
+    this.mManipulatorScaling.setColor([1, 0, 0, 1]);
+    this.mManipulatorScaling.getXform().setSize(2, 2);
+    
+    this.mBarOne = new SquareRenderable(this.mConstColorShader);
+    this.mBarOne.setColor([0, 0, 0, 1]);
+    this.mBarOne.getXform().setSize(4, .2);
+    
+    this.mBarTwo = new SquareRenderable(this.mConstColorShader);
+    this.mBarTwo.setColor([0, 0, 0, 1]);
+    this.mBarTwo.getXform().setSize(.2, 4);
+    
 };
 
 ClassExample.prototype.draw = function (camera) {
     // Step F: Starts the drawing by activating the camera
     camera.setupViewProjection();
 
-    // centre red square
+
+    
+    // center red square
     var i;
     for (i=0; i<this.mAllObjects.length; i++)
         this.mAllObjects[i].draw(camera);
+    
+    // check to see if the manipulators sshould be drawn (after the arms)
+    if (this.drawManipulator){ // draw the direct manipulator
+        this.mBarOne.draw(camera);
+        this.mBarTwo.draw(camera);
+        this.mManipulatorTranslate.draw(camera);
+        this.mManipulatorRotation.draw(camera);
+        this.mManipulatorScaling.draw(camera);
+    }
 };
 
 // Determine if any objects contain the point
