@@ -104,7 +104,7 @@ Renderable.prototype.getVelocity = function () { return this.mVelocity; };
 Renderable.prototype.containsPoint = function(x, y)
 {
     var xf = this.getXform();
-    if(Math.asb(x - xf.getXPos()) < xf.getWidth() / 5 &&
+    if(Math.abs(x - xf.getXPos()) < xf.getWidth() / 5 &&
        Math.abs(y - xf.getYPos()) < xf.getHeight() / 5)
     {
         return true;

@@ -28,6 +28,8 @@ myModule.controller("MainCtrl", function ($scope) {
     
     $scope.mSelectedXform = $scope.mMyWorld.currentObject().getXform();
     $scope.mMyImagePath = null;
+    
+    $scope.slectedTransform = "scale"; // none scale translate rotate
         
     $scope.mUseShader = [
         {label: "Constant Color", value: "Constant"},
@@ -64,11 +66,16 @@ myModule.controller("MainCtrl", function ($scope) {
         if($scope.mMyWorld.select(mWCX, mWCY)) // selecting an object
         {
             $scope.mSelectedXform = $scope.mMyWorld.currentObject().getXform();
-            
+            $scope.slectedTransform = "none"; // selecting an object but not a manipulator yet
             $scope.mMyWorld.drawManipulator = true; // selecting an object so draw
             $scope.handleManipulators(); 
+  
+        } // check to see if the scale manipulator is being clicked
+        else if($scope.checkClicks($scope.mMyWorld.mManipulatorScaling.getXform().getXPos(), 
+            $scope.mMyWorld.mManipulatorScaling.getXform().getYPos(), mWCX, mWCY)){ // clicking on the scale manipulator
+            $scope.slectedTransform = "scale";
         }
-        else
+        else // making a new object
         {
             $scope.mMyWorld.drawManipulator = false; // stop drawing
             
@@ -81,13 +88,14 @@ myModule.controller("MainCtrl", function ($scope) {
     };
 
     $scope.dragSquare = function (event) {
-        // console.log("dragging");
         switch (event.which) {
         case 1: // left
-            $scope.mMyWorld.defineWidth(
-                $scope.mView.mouseWCX($scope.mCanvasMouse.getPixelXPos(event)),
-                $scope.mView.mouseWCX($scope.mCanvasMouse.getPixelYPos(event)));
-            $scope.mForceRedraw = true;
+            if ($scope.slectedTransform === "scale"){ // change the scale
+                $scope.mMyWorld.defineWidth(
+                    $scope.mView.mouseWCX($scope.mCanvasMouse.getPixelXPos(event)),
+                    $scope.mView.mouseWCX($scope.mCanvasMouse.getPixelYPos(event)));
+                $scope.mForceRedraw = true;
+            }
             break;
         }
     };
@@ -98,6 +106,7 @@ myModule.controller("MainCtrl", function ($scope) {
         case 1: // left
             $scope.mMyWorld.defined();
             $scope.mForceRedraw = true;
+            $scope.slectedTransform = "scale"; // object created prepare for another
             break;
         }
     };
@@ -135,4 +144,12 @@ myModule.controller("MainCtrl", function ($scope) {
         $scope.mMyWorld.mBarTwo.getXform().setPosition(targetX, targetY - 2.5);
     };
 
+    $scope.checkClicks = function (manipulatorX, manipulatorY, x, y){
+        
+       if(Math.abs(x - manipulatorX) < 10 &&
+            Math.abs(y - manipulatorY) < 10) {
+            return true;
+       }
+       return false;
+    };
 });
