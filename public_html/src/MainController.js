@@ -63,7 +63,7 @@ myModule.controller("MainCtrl", function ($scope) {
         var mWCX = $scope.mView.mouseWCX($scope.mCanvasMouse.getPixelXPos(event));
         var mWCY = $scope.mView.mouseWCY($scope.mCanvasMouse.getPixelYPos(event));
         
-        if($scope.mMyWorld.select(mWCX, mWCY)) // selecting an object
+        if($scope.mMyWorld.select(mWCX, mWCY) && $scope.mMyWorld.drawManipulator === false) // selecting an object
         {
             $scope.mSelectedXform = $scope.mMyWorld.currentObject().getXform();
             $scope.slectedTransform = "none"; // selecting an object but not a manipulator yet
@@ -74,6 +74,10 @@ myModule.controller("MainCtrl", function ($scope) {
         else if($scope.checkClicks($scope.mMyWorld.mManipulatorScaling.getXform().getXPos(), 
             $scope.mMyWorld.mManipulatorScaling.getXform().getYPos(), mWCX, mWCY)){ // clicking on the scale manipulator
             $scope.slectedTransform = "scale";
+        } // check to see if the translate manipulator is being clicked
+        else if($scope.checkClicks($scope.mMyWorld.mManipulatorTranslate.getXform().getXPos(), 
+            $scope.mMyWorld.mManipulatorTranslate.getXform().getYPos(), mWCX, mWCY)){
+            $scope.slectedTransform = "translate";
         }
         else // making a new object
         {
@@ -88,6 +92,9 @@ myModule.controller("MainCtrl", function ($scope) {
     };
 
     $scope.dragSquare = function (event) {
+        var mWCX = $scope.mView.mouseWCX($scope.mCanvasMouse.getPixelXPos(event));
+        var mWCY = $scope.mView.mouseWCY($scope.mCanvasMouse.getPixelYPos(event));
+        
         switch (event.which) {
         case 1: // left
             if ($scope.slectedTransform === "scale"){ // change the scale
@@ -95,6 +102,9 @@ myModule.controller("MainCtrl", function ($scope) {
                     $scope.mView.mouseWCX($scope.mCanvasMouse.getPixelXPos(event)),
                     $scope.mView.mouseWCX($scope.mCanvasMouse.getPixelYPos(event)));
                 $scope.mForceRedraw = true;
+            }
+            if ($scope.slectedTransform === "translate"){ // change the translation
+                $scope.mMyWorld.currentObject().getXform().setPosition(mWCX, mWCY);
             }
             break;
         }
@@ -146,8 +156,8 @@ myModule.controller("MainCtrl", function ($scope) {
 
     $scope.checkClicks = function (manipulatorX, manipulatorY, x, y){
         
-       if(Math.abs(x - manipulatorX) < 10 &&
-            Math.abs(y - manipulatorY) < 10) {
+       if(Math.abs(x - manipulatorX) < 1 &&
+            Math.abs(y - manipulatorY) < 1) {
             return true;
        }
        return false;
