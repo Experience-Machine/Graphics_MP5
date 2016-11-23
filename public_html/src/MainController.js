@@ -78,7 +78,12 @@ myModule.controller("MainCtrl", function ($scope) {
         else if($scope.checkClicks($scope.mMyWorld.mManipulatorTranslate.getXform().getXPos(), 
             $scope.mMyWorld.mManipulatorTranslate.getXform().getYPos(), mWCX, mWCY)){
             $scope.slectedTransform = "translate";
+        } // check to see if the rotation manipulator is being clicked
+        else if($scope.checkClicks($scope.mMyWorld.mManipulatorRotation.getXform().getXPos(), 
+            $scope.mMyWorld.mManipulatorRotation.getXform().getYPos(), mWCX, mWCY)){
+            $scope.slectedTransform = "rotate";
         }
+        
         else // making a new object
         {
             $scope.mMyWorld.drawManipulator = false; // stop drawing
@@ -105,6 +110,9 @@ myModule.controller("MainCtrl", function ($scope) {
             }
             if ($scope.slectedTransform === "translate"){ // change the translation
                 $scope.mMyWorld.currentObject().getXform().setPosition(mWCX, mWCY);
+            }
+            if ($scope.slectedTransform === "rotate"){ // change the rotation
+                $scope.mMyWorld.currentObject().getXform().setRotationInDegree(mWCX * 10);
             }
             break;
         }
