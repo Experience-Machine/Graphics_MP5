@@ -63,8 +63,6 @@ function ClassExample() {
 ClassExample.prototype.draw = function (camera) {
     // Step F: Starts the drawing by activating the camera
     camera.setupViewProjection();
-
-
     
     // center red square
     var i;
@@ -87,25 +85,42 @@ ClassExample.prototype.select = function(x, y)
 {
     var i;
     for (i=0; i<this.mAllObjects.length; i++)
-//        for (var j = 0; j < this.mAllObjects[i].mChildren.length; i++)
     {
-        if(this.mAllObjects[i].containsPoint(x, y))
+        var obj = this.mAllObjects[i];
+        for (var j = 0; j < obj.mChildren.length; j++)
         {
-            this.mCurrentObject = this.mAllObjects[i];
-            return true;
-        }
-
-        for (var j = 0; j < this.mAllObjects[i].mChildren.length; j++)
+            var child = obj.mChildren[j];
+            console.log("Position[" + j + "]: " + child.getXform().getPosition());
+            for (var k = 0; k < child.mChildren.length; k++)
             {
-                if(this.mAllObjects[i].mChildren[j].containsPoint(x, y))
+                var grandChild = child.mChildren[k];
+                console.log("\tPosition[" + k + "]: " + 
+                        (grandChild.getXform().getXPos() + child.getXform().getXPos()) + "," +
+                        (grandChild.getXform().getYPos() + child.getXform().getYPos()));
+                console.log("\tMouse: " + x + "," + y)
+                if(grandChild.containsPoint(x - child.getXform().getXPos(), y - child.getXform().getYPos()))
                 {
-                    this.mCurrentObject = this.mAllObjects[i].mChildren[j];
+                    console.log("Grand child!");
+                    this.mCurrentObject = grandChild;
                     return true;
                 }
-        
+
             }
             
+            if(child.containsPoint(x, y))
+            {
+                console.log("Child!");
+                this.mCurrentObject = child;
+                return true;
+            }
 
+        }
+           
+        if(obj.containsPoint(x, y))
+        {
+            this.mCurrentObject = obj;
+            return true;
+        }
     }
 
     return false;

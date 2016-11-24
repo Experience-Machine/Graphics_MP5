@@ -37,7 +37,7 @@ SceneNode.prototype.containsPoint = function(x, y)
     // If we have any renderables..
     if(this.mSet.length > 0)
     {
-        console.log("Mouse XY: " + x + ", " + y + "\tSN XY: " + this.getXform().getXPos() + ", " + this.getXform().getYPos());
+        //console.log("Mouse XY: " + x + ", " + y + "\tSN XY: " + this.getXform().getXPos() + ", " + this.getXform().getYPos());
         // For each renderable..
         for(var i = 0; i < this.mSet.length; i++)
         {
@@ -48,7 +48,7 @@ SceneNode.prototype.containsPoint = function(x, y)
             var xfWidth = this.getXform().getWidth()*xf.getWidth();
             var xfHeight = this.getXform().getHeight()*xf.getHeight();
             
-            console.log("\tObj[" + i + "]: " + xPos + ", " + yPos);
+            //console.log("\tObj[" + i + "]: " + xPos + ", " + yPos);
             
             // If they're in our bounding box
             if(Math.abs(x - xPos) < xfWidth / 2 &&

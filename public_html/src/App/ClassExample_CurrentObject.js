@@ -26,7 +26,7 @@ ClassExample.prototype.defineCenter = function (x, y) {
     var smallShape = new ArmSegment(this.vmUseShader, "newShape", 0, 0);
     smallShape.getXform().setSize(.5,.5);
     smallShape.getXform().setPosition(0,2.5);
-    this.mCurrentObject.addToSet(smallShape);
+    this.mCurrentObject.addAsChild(smallShape);
     /*
     if (this.vmUseRandomColor) {
         this.mCurrentObject.setColor([
