@@ -90,21 +90,18 @@ ClassExample.prototype.select = function(x, y)
         for (var j = 0; j < obj.mChildren.length; j++)
         {
             var child = obj.mChildren[j];
-            console.log("Position[" + j + "]: " + child.getXform().getPosition());
+            //console.log("Position[" + j + "]: " + child.getXform().getPosition());
             for (var k = 0; k < child.mChildren.length; k++)
             {
                 var grandChild = child.mChildren[k];
-                console.log("\tPosition[" + k + "]: " + 
-                        (grandChild.getXform().getXPos() + child.getXform().getXPos()) + "," +
-                        (grandChild.getXform().getYPos() + child.getXform().getYPos()));
-                console.log("\tMouse: " + x + "," + y)
-                if(grandChild.containsPoint(x - child.getXform().getXPos(), y - child.getXform().getYPos()))
+                console.log("==GC==");
+                if(grandChild.containsPointOffset(x, y, child.getXform()))
                 {
                     console.log("Grand child!");
                     this.mCurrentObject = grandChild;
                     return true;
                 }
-
+                console.log("=====");
             }
             
             if(child.containsPoint(x, y))
