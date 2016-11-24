@@ -13,12 +13,12 @@ function ArmSegment(shader, name, xPivot, yPivot)
     SceneNode.call(this, shader, name, true);   // calling super class constructor
 
     var xf = this.getXform();
-    xf.setPivot(xPivot, yPivot);
+    xf.setPivot(xPivot, yPivot + 1);
     
     // now create the children shapes
     var obj = new SquareRenderable(shader);  // The blue shirt
     this.addToSet(obj);
-    obj.setColor([0, 0, 1, 1]);
+    obj.setColor([1, 0.5, 0, 1]);
     xf = obj.getXform();
     xf.setSize(1, 2);
     xf.setPosition(xPivot, 1 + yPivot);
@@ -32,28 +32,28 @@ function ArmSegment(shader, name, xPivot, yPivot)
     
     obj = new SquareRenderable(shader); // The green leg (left)
     this.addToSet(obj);
-    obj.setColor([0, 1, 0, 1]);
+    obj.setColor([0, 0, 1, 1]);
     xf = obj.getXform();
     xf.setSize(0.25, .5); // so that we can see the connecting point
     xf.setPosition(xPivot+0.375, yPivot - .25);
     
     obj = new SquareRenderable(shader); // The green leg (right)
     this.addToSet(obj);
-    obj.setColor([0, 1, 0, 1]);
+    obj.setColor([0, 0, 1, 1]);
     xf = obj.getXform();
     xf.setSize(0.25, .5); // so that we can see the connecting point
     xf.setPosition(xPivot-0.375, yPivot - .25);
     
     obj = new SquareRenderable(shader); // The left red arm
     this.addToSet(obj);
-    obj.setColor([1, 0, 0, 1]);
+    obj.setColor([0, 1, 0, 1]);
     xf = obj.getXform();
     xf.setSize(1, 0.5); // so that we can see the connecting point
     xf.setPosition(xPivot - .65, yPivot+1);
     
     obj = new SquareRenderable(shader); // The right red arm
     this.addToSet(obj);
-    obj.setColor([1, 0, 0, 1]);
+    obj.setColor([0, 1, 0, 1]);
     xf = obj.getXform();
     xf.setSize(1, 0.5); // so that we can see the connecting point
     xf.setPosition(xPivot + .65, yPivot+1);
