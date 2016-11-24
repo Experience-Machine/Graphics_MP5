@@ -34,11 +34,38 @@ SceneNode.prototype.size = function () { return this.mSet.length; };
 
 SceneNode.prototype.containsPoint = function(x, y)
 {
-    var xf = this.getXform();
-    if(Math.abs(x - xf.getXPos()) < xf.getWidth() / 5 &&
-       Math.abs(y - xf.getYPos()) < xf.getHeight() / 5)
+    // If we have any renderables..
+    if(this.mSet.length > 0)
     {
-        return true;
+        console.log("Mouse XY: " + x + ", " + y + "\tSN XY: " + this.getXform().getXPos() + ", " + this.getXform().getYPos());
+        // For each renderable..
+        for(var i = 0; i < this.mSet.length; i++)
+        {
+            // Get the true x/y pos, with respect to this SN
+            var xf = this.mSet[i].getXform();
+            var xPos = this.getXform().getXPos() + xf.getXPos() * this.getXform().getWidth();
+            var yPos = this.getXform().getYPos() + xf.getYPos() * this.getXform().getHeight();
+            var xfWidth = this.getXform().getWidth()*xf.getWidth();
+            var xfHeight = this.getXform().getHeight()*xf.getHeight();
+            
+            console.log("\tObj[" + i + "]: " + xPos + ", " + yPos);
+            
+            // If they're in our bounding box
+            if(Math.abs(x - xPos) < xfWidth / 2 &&
+                Math.abs(y - yPos) < xfHeight / 2)
+            {
+                return true;
+            }
+        }
+    }
+    else
+    {
+        var xf = this.getXform();
+        if(Math.abs(x - xf.getXPos()) < xf.getWidth() / 5 &&
+           Math.abs(y - xf.getYPos()) < xf.getHeight() / 5)
+        {
+            return true;
+        }
     }
     return false;
 };
