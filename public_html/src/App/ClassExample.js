@@ -3,7 +3,7 @@
  * This is the logic of our game. For now, this is very simple.
  */
 /*jslint node: true, vars: true */
-/*global gEngine, SimpleShader, SquareRenderable, SceneNode, ArmSegment */
+/*global gEngine, SimpleShader, SquareRenderable, SceneNode, ArmSegment, ListObject */
 /* find out more about jslint: http://www.jslint.com/help.html */
 
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
@@ -35,6 +35,7 @@ function ClassExample() {
     
     this.vmUseRandomColor = false;
     this.setConstShader();
+    this.mAllObjects.push(new ListObject(this.mConstColorShader, "newList", 0,0));
     
     // draw the manipulators
     this.mManipulatorTranslate = new SquareRenderable(this.mConstColorShader);
