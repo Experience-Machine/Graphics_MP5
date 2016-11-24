@@ -93,20 +93,20 @@ ClassExample.prototype.select = function(x, y)
             //console.log("Position[" + j + "]: " + child.getXform().getPosition());
             for (var k = 0; k < child.mChildren.length; k++)
             {
+                var cXform = new Transform();
+                cXform.setPosition(obj.getXform().getXPos() + child.getXform().getXPos()*obj.getXform().getWidth(), 
+                    obj.getXform().getYPos() + child.getXform().getYPos()*obj.getXform().getHeight());
+                cXform.setSize(obj.getXform().getWidth()*child.getXform().getWidth(), 
+                                obj.getXform().getHeight()*child.getXform().getHeight());
                 var grandChild = child.mChildren[k];
-                console.log("==GC==");
-                if(grandChild.containsPointOffset(x, y, child.getXform()))
+                if(grandChild.containsPointOffset(x, y, cXform))
                 {
-                    console.log("Grand child!");
                     this.mCurrentObject = grandChild;
                     return true;
                 }
-                console.log("=====");
             }
-            
-            if(child.containsPoint(x, y))
+            if(child.containsPointOffset(x, y, obj.getXform()))
             {
-                console.log("Child!");
                 this.mCurrentObject = child;
                 return true;
             }

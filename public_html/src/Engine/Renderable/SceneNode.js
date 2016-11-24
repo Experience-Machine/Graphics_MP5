@@ -71,12 +71,7 @@ SceneNode.prototype.containsPoint = function(x, y)
 };
 
 SceneNode.prototype.containsPointOffset = function(x, y, offsetXform)
-{
-    console.log("\tMouse: " + x + "," + y);
-    console.log("\tPosition: " + 
-                        (this.getXform().getXPos() + offsetXform.getXPos()) + "," +
-                        (this.getXform().getYPos() + offsetXform.getYPos()));
-    
+{    
     // If we have any renderables..
     if(this.mSet.length > 0)
     {
