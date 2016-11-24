@@ -16,15 +16,6 @@ function ListObject(shader, name, xPivot, yPivot)
     
     var xf = this.getXform();
     xf.setPivot(xPivot, yPivot);
-    
-    this.sortableObjects = [];
-    
-    
-};
-
-ListObject.prototype.addSortable = function (sortableObject)
-{
-    this.sortableObjects.push(sortableObject);
 };
 
 gEngine.Core.inheritPrototype(ListObject, SceneNode);
@@ -32,33 +23,36 @@ gEngine.Core.inheritPrototype(ListObject, SceneNode);
 ListObject.prototype.update = function()
 {
         // Determine 'overall size' of objects
-    var numObjects = this.mChildren.length;
-    var overallSize = 0;
-    var i;
-    for (i=0; i < numObjects; i++)
+    if (this.mChildren.length > 0)
     {
-        overallSize += this.mChildren[i].getXform().getWidth();
-    }
-    
-    // Update first object first
-    i = 0;
-    var xf = this.mChildren[i].getXform();
-    var xPos = (-overallSize/2); // Could be better
-    var yPos = -20; // Arbitrary line
-    xf.setDestination(xPos, yPos);
-    var lastPosition = xPos;
-    lastPosition += xf.getWidth()/2;
-    
-    // Update the rest of the objects
-    for (i=1; i < numObjects; i++)
-    {
-        xf = this.mChildren[i].getXform();
-        xPos = lastPosition + xf.getWidth()/2 + 2;
+        var numObjects = this.mChildren.length;
+        var overallSize = 0;
+        var i;
+        for (i=0; i < numObjects; i++)
+        {
+            overallSize += this.mChildren[i].getXform().getWidth();
+        }
+
+        // Update first object first
+        i = 0;
+        var xf = this.mChildren[i].getXform();
+        var xPos = (-overallSize/2); // Could be better
+        var yPos = -20; // Arbitrary line
         xf.setDestination(xPos, yPos);
-        lastPosition = xPos + xf.getWidth()/2;
-    }
-    for (var i=0; i<this.mChildren.length; i++)
-    {
-        this.mChildren[i].update();
+        var lastPosition = xPos;
+        lastPosition += xf.getWidth()/2;
+
+        // Update the rest of the objects
+        for (i=1; i < numObjects; i++)
+        {
+            xf = this.mChildren[i].getXform();
+            xPos = lastPosition + xf.getWidth()/2 + 2;
+            xf.setDestination(xPos, yPos);
+            lastPosition = xPos + xf.getWidth()/2;
+        }
+        for (var i=0; i<this.mChildren.length; i++)
+        {
+            this.mChildren[i].update();
+        }
     }
 }
