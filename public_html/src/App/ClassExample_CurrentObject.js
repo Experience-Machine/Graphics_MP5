@@ -23,6 +23,10 @@ ClassExample.prototype.currentObject = function () {
 ClassExample.prototype.defineCenter = function (x, y) {
     
     this.mCurrentObject = new ArmSegment(this.vmUseShader, "newShape", 0, 0);
+    var smallShape = new ArmSegment(this.vmUseShader, "newShape", 0, 0);
+    smallShape.getXform().setSize(.5,.5);
+    smallShape.getXform().setPosition(0,2.5);
+    this.mCurrentObject.addToSet(smallShape);
     /*
     if (this.vmUseRandomColor) {
         this.mCurrentObject.setColor([

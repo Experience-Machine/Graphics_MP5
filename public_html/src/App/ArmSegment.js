@@ -13,7 +13,7 @@ function ArmSegment(shader, name, xPivot, yPivot)
     SceneNode.call(this, shader, name, true);   // calling super class constructor
 
     var xf = this.getXform();
-    xf.setPivot(xPivot, yPivot + 1);
+    xf.setPivot(xPivot, yPivot);
     
     // now create the children shapes
     var obj = new SquareRenderable(shader);  // The blue shirt
@@ -21,77 +21,77 @@ function ArmSegment(shader, name, xPivot, yPivot)
     obj.setColor([1, 0.5, 0, 1]);
     xf = obj.getXform();
     xf.setSize(1, 2);
-    xf.setPosition(xPivot, 1 + yPivot);
+    xf.setPosition(xPivot, yPivot);
  
     obj = new SquareRenderable(shader);  // The yellow face
     this.addToSet(obj);
     obj.setColor([1 , 1, 0, 1]);
     xf = obj.getXform();
     xf.setSize(1.3, 1.3); // so that we can see the connecting point
-    xf.setPosition(xPivot, 2 + yPivot);
+    xf.setPosition(xPivot, 1 + yPivot);
     
     obj = new SquareRenderable(shader); // The green leg (left)
     this.addToSet(obj);
     obj.setColor([0, 0, 1, 1]);
     xf = obj.getXform();
     xf.setSize(0.25, .5); // so that we can see the connecting point
-    xf.setPosition(xPivot+0.375, yPivot - .25);
+    xf.setPosition(xPivot+0.375, yPivot - 1.25);
     
     obj = new SquareRenderable(shader); // The green leg (right)
     this.addToSet(obj);
     obj.setColor([0, 0, 1, 1]);
     xf = obj.getXform();
     xf.setSize(0.25, .5); // so that we can see the connecting point
-    xf.setPosition(xPivot-0.375, yPivot - .25);
+    xf.setPosition(xPivot-0.375, yPivot - 1.25);
     
     obj = new SquareRenderable(shader); // The left red arm
     this.addToSet(obj);
     obj.setColor([0, 1, 0, 1]);
     xf = obj.getXform();
     xf.setSize(1, 0.5); // so that we can see the connecting point
-    xf.setPosition(xPivot - .65, yPivot+1);
+    xf.setPosition(xPivot - .65, yPivot);
     
     obj = new SquareRenderable(shader); // The right red arm
     this.addToSet(obj);
     obj.setColor([0, 1, 0, 1]);
     xf = obj.getXform();
     xf.setSize(1, 0.5); // so that we can see the connecting point
-    xf.setPosition(xPivot + .65, yPivot+1);
+    xf.setPosition(xPivot + .65, yPivot);
     
     obj = new SquareRenderable(shader); // left eye
     this.addToSet(obj);
     obj.setColor([0, 0, 0, 1]);
     xf = obj.getXform();
     xf.setSize(.25, .25); // so that we can see the connecting point
-    xf.setPosition(xPivot - .25, yPivot+2.25);
+    xf.setPosition(xPivot - .25, yPivot+1.25);
     
     obj = new SquareRenderable(shader); // right eye
     this.addToSet(obj);
     obj.setColor([0, 0, 0, 1]);
     xf = obj.getXform();
     xf.setSize(.25, 0.25); // so that we can see the connecting point
-    xf.setPosition(xPivot + .25, yPivot+2.25);
+    xf.setPosition(xPivot + .25, yPivot+1.25);
     
     obj = new SquareRenderable(shader); // left smile block
     this.addToSet(obj);
     obj.setColor([0, 0, 0, 1]);
     xf = obj.getXform();
     xf.setSize(.15, 0.15); // so that we can see the connecting point
-    xf.setPosition(xPivot - .25, yPivot+1.85);
+    xf.setPosition(xPivot - .25, yPivot+0.85);
     
     obj = new SquareRenderable(shader); // right smile block
     this.addToSet(obj);
     obj.setColor([0, 0, 0, 1]);
     xf = obj.getXform();
     xf.setSize(.15, 0.15); // so that we can see the connecting point
-    xf.setPosition(xPivot + .25, yPivot+1.85);
+    xf.setPosition(xPivot + .25, yPivot+0.85);
     
     obj = new SquareRenderable(shader); // bottom smile block
     this.addToSet(obj);
     obj.setColor([0, 0, 0, 1]);
     xf = obj.getXform();
     xf.setSize(.45, 0.15); // so that we can see the connecting point
-    xf.setPosition(xPivot, yPivot+1.75);
+    xf.setPosition(xPivot, yPivot+0.75);
     
     this.mPulseRate = 0.005;
     this.mRotateRate = -10;
