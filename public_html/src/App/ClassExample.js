@@ -87,10 +87,26 @@ ClassExample.prototype.select = function(x, y)
 {
     var i;
     for (i=0; i<this.mAllObjects.length; i++)
+//        for (var j = 0; j < this.mAllObjects[i].mChildren.length; i++)
+    {
         if(this.mAllObjects[i].containsPoint(x, y))
         {
             this.mCurrentObject = this.mAllObjects[i];
             return true;
         }
+
+        for (var j = 0; j < this.mAllObjects[i].mChildren.length; j++)
+            {
+                if(this.mAllObjects[i].mChildren[j].containsPoint(x, y))
+                {
+                    this.mCurrentObject = this.mAllObjects[i].mChildren[j];
+                    return true;
+                }
+        
+            }
+            
+
+    }
+
     return false;
 };
