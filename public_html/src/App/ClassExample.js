@@ -109,7 +109,7 @@ ClassExample.prototype.select = function(x, y)
             if(child.containsPointOffset(x, y, obj.getXform()))
             {
                 this.mCurrentObject = child;
-                this.mSelectedXform = cXform;
+                this.mSelectedXform = obj.getXform();
                 return true;
             }
 
@@ -118,7 +118,7 @@ ClassExample.prototype.select = function(x, y)
         if(obj.containsPoint(x, y))
         {
             this.mCurrentObject = obj;
-            this.mSelectedXform = obj.getXform();
+            this.mSelectedXform = null;
             return true;
         }
     }

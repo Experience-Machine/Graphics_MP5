@@ -145,14 +145,14 @@ myModule.controller("MainCtrl", function ($scope) {
     
     // handle the movement of the various direct manipulators
     $scope.handleManipulators = function (){
-        
-        if(!$scope.mMyWorld.selectedXform())
-        {
-            return;
-        }
-        
         var targetX = $scope.mMyWorld.currentObject().getXform().getXPos();   
         var targetY = $scope.mMyWorld.currentObject().getXform().getYPos();   
+                
+        if($scope.mMyWorld.selectedXform() && $scope.mMyWorld.selectedXform() !== null)
+        {
+            targetX += $scope.mMyWorld.selectedXform().getXPos();
+            targetY += $scope.mMyWorld.selectedXform().getYPos();  
+        }
         
         // translate manipulator
         $scope.mMyWorld.mManipulatorTranslate.getXform().setPosition(targetX, targetY);
