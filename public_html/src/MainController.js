@@ -65,7 +65,8 @@ myModule.controller("MainCtrl", function ($scope) {
         
         if($scope.mMyWorld.select(mWCX, mWCY) && $scope.mMyWorld.drawManipulator === false) // selecting an object
         {
-            $scope.mSelectedXform = $scope.mMyWorld.currentObject().getXform();
+            //$scope.mSelectedXform = $scope.mMyWorld.currentObject().getXform();
+            $scope.mSelectedXform = $scope.mMyWorld.mSelectedXform;
             $scope.slectedTransform = "none"; // selecting an object but not a manipulator yet
             $scope.mMyWorld.drawManipulator = true; // selecting an object so draw
             $scope.handleManipulators(); 
@@ -145,8 +146,13 @@ myModule.controller("MainCtrl", function ($scope) {
     // handle the movement of the various direct manipulators
     $scope.handleManipulators = function (){
         
+        if(!$scope.mMyWorld.selectedXform())
+        {
+            return;
+        }
+        
         var targetX = $scope.mMyWorld.currentObject().getXform().getXPos();   
-        var targetY = $scope.mMyWorld.currentObject().getXform().getYPos();
+        var targetY = $scope.mMyWorld.currentObject().getXform().getYPos();   
         
         // translate manipulator
         $scope.mMyWorld.mManipulatorTranslate.getXform().setPosition(targetX, targetY);

@@ -20,6 +20,11 @@ ClassExample.prototype.currentObject = function () {
     return this.mCurrentObject;
 };
 
+ClassExample.prototype.selectedXform = function()
+{
+    return this.mSelectedXform;
+};
+
 ClassExample.prototype.defineCenter = function (x, y) {
     
     this.mCurrentObject = new ArmSegment(this.vmUseShader, "newShape", 0, 0);

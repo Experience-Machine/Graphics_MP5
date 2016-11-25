@@ -90,24 +90,26 @@ ClassExample.prototype.select = function(x, y)
         for (var j = 0; j < obj.mChildren.length; j++)
         {
             var child = obj.mChildren[j];
-            //console.log("Position[" + j + "]: " + child.getXform().getPosition());
-            for (var k = 0; k < child.mChildren.length; k++)
-            {
-                var cXform = new Transform();
+            var cXform = new Transform();
                 cXform.setPosition(obj.getXform().getXPos() + child.getXform().getXPos()*obj.getXform().getWidth(), 
                     obj.getXform().getYPos() + child.getXform().getYPos()*obj.getXform().getHeight());
                 cXform.setSize(obj.getXform().getWidth()*child.getXform().getWidth(), 
                                 obj.getXform().getHeight()*child.getXform().getHeight());
+            //console.log("Position[" + j + "]: " + child.getXform().getPosition());
+            for (var k = 0; k < child.mChildren.length; k++)
+            {
                 var grandChild = child.mChildren[k];
                 if(grandChild.containsPointOffset(x, y, cXform))
                 {
                     this.mCurrentObject = grandChild;
+                    this.mSelectedXform = cXform;
                     return true;
                 }
             }
             if(child.containsPointOffset(x, y, obj.getXform()))
             {
                 this.mCurrentObject = child;
+                this.mSelectedXform = cXform;
                 return true;
             }
 
@@ -116,6 +118,7 @@ ClassExample.prototype.select = function(x, y)
         if(obj.containsPoint(x, y))
         {
             this.mCurrentObject = obj;
+            this.mSelectedXform = obj.getXform();
             return true;
         }
     }
